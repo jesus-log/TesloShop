@@ -1,0 +1,15 @@
+<div class="card bg-base-100 w-96 shadow-sm animate-fade-in-scale">
+  <figure>
+    <img
+      [src]= "product().images | productImage"
+      [alt]="product().title" />
+  </figure>
+  <div class="card-body">
+    <h2 [routerLink]="['/product',product().slug]" class="card-title font-[monserrat] text-lg text-secondary cursor-pointer hover:underline">{{product().title}}</h2>
+    <p>{{product().description | slice : 0 : 70}}...</p>
+    <div class="card-actions justify-end">
+      <a [routerLink]="['/product',product().slug]" class="bg-secondary btn">Ver</a>
+    </div>
+  </div>
+</div>
+
