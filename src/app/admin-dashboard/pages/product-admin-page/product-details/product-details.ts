@@ -22,6 +22,10 @@ export class ProductDetails implements OnInit {
   router = inject(Router);
   product = input.required<Product>();
 
+  tempImages = signal<string[]>([]);
+
+  imageFileList: FileList|undefined = undefined;
+
   sizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
 
 
@@ -67,16 +71,17 @@ export class ProductDetails implements OnInit {
 
 
     if (this.product().id == 'new') {
-      const product = await firstValueFrom(this.productService.createProduct(productLike))
+      const product = await firstValueFrom(this.productService.createProduct(productLike,this.imageFileList))
 
         this.router.navigate(['/admin/products',product.id]);
 
 
     } else {
-      await firstValueFrom(this.productService.updateProducts(this.product().id, productLike));
+      await firstValueFrom(this.productService.updateProducts(this.product().id, productLike,this.imageFileList));
     }
 
     this.wasSaved.set(true);
+    this.tempImages.set([]);
     console.log(this.wasSaved())
     setTimeout(()=>{
       this.wasSaved.set(false)},3000
@@ -88,6 +93,15 @@ export class ProductDetails implements OnInit {
     this.productForm.reset(this.product() as any);
     //this.productForm.patchValue(formLike as any)
     this.productForm.patchValue({ tags: formLike.tags?.join(',') })
+  }
+
+
+  onFilesChanged(event:Event){
+    const fileList = (event.target as HTMLInputElement).files;
+    this.imageFileList = fileList ?? undefined;
+    const imageUrls = Array.from( fileList ?? []).map(file=>URL.createObjectURL(file))
+
+    this.tempImages.set(imageUrls);
   }
 
 }
