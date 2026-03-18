@@ -1,5 +1,5 @@
-import { Component, computed, inject } from '@angular/core';
-import { RouterOutlet, RouterLink, RouterLinkActive } from "@angular/router";
+import { Component, computed, inject, viewChild, ElementRef } from '@angular/core';
+import { RouterOutlet, RouterLink, RouterLinkActive, Router } from "@angular/router";
 import { AuthService } from '@auth/services/auth.service';
 
 
@@ -11,8 +11,20 @@ import { AuthService } from '@auth/services/auth.service';
 export class AdminDashboardPage {
 
   authService = inject(AuthService);
+  router = inject(Router);
+  drawerToggle = viewChild.required<ElementRef>('adminDrawerToggle');
 
   user = computed(()=>this.authService.user()());
+
+  closeDrawer() {
+    const checkbox = this.drawerToggle().nativeElement as HTMLInputElement;
+    checkbox.checked = false;
+  }
+
+  logout(){
+    this.authService.logout();
+    this.router.navigateByUrl('/');
+  }
 
 
  }

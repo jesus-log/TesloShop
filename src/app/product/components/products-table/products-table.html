@@ -1,5 +1,6 @@
-<div class="overflow-x-auto">
-  <table class="table">
+<!-- Desktop Table -->
+<div class="hidden md:block overflow-x-auto">
+  <table class="table table-sm md:table-md">
     <!-- head -->
     <thead>
       <tr>
@@ -15,7 +16,6 @@
       </tr>
     </thead>
     <tbody>
-      <!-- row 1 -->
       @for (product of products(); track product.id) {
       <tr>
         <th>
@@ -53,6 +53,47 @@
         </td>
       </tr>
       }
-
+    </tbody>
   </table>
+</div>
+
+<!-- Mobile Cards -->
+<div class="md:hidden space-y-4">
+  @for (product of products(); track product.id) {
+  <div class="card bg-base-200 shadow-md">
+    <div class="card-body p-4">
+      <div class="flex items-center gap-3 mb-3">
+        <div class="avatar">
+          <div class="mask mask-squircle h-16 w-16">
+            <img [src]="product.images | productImage" [alt]="product.title" />
+          </div>
+        </div>
+        <div class="flex-1">
+          <h3 class="font-bold text-base">{{product.title}}</h3>
+          <p class="text-sm opacity-60">{{product.sizes.join(", ")}}</p>
+        </div>
+      </div>
+      <div class="divider my-2"></div>
+      <div class="grid grid-cols-2 gap-2 mb-3">
+        <div>
+          <p class="text-xs opacity-60">Precio</p>
+          <p class="font-bold">{{product.price | currency}}</p>
+        </div>
+        <div>
+          <p class="text-xs opacity-60">Inventario</p>
+          <div class="mt-1">
+            @if (product.stock <= 10) { <span class="badge badge-error badge-sm">{{product.stock}}</span>
+              }
+              @else if (product.stock <= 20) { <span class="badge badge-warning badge-sm">{{product.stock}}</span>
+                }
+                @else {
+                <span class="badge badge-success badge-sm">{{product.stock}}</span>
+                }
+          </div>
+        </div>
+      </div>
+      <a [routerLink]="[product.id]" class="btn btn-primary btn-sm w-full">Ver detalles</a>
+    </div>
+  </div>
+  }
 </div>

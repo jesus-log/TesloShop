@@ -1,25 +1,27 @@
-<h1 class="text-3xl font-bold font-[monserrat] mt-2 text-secondary">{{gender() | titlecase }}</h1>
-<h2 class="text-xl mb-5">Para todos los gustos</h2>
+<div class="p-6">
+  <h1 class="text-3xl font-bold font-[monserrat] mt-2 text-secondary">{{gender() | titlecase }}</h1>
+  <h2 class="text-xl mb-5">Para todos los gustos</h2>
 
-<div class="grid grid-cols-1  lg:grid-cols-2 xl:grid-cols-3 mt-2 gap-5">
+  <div class="grid grid-cols-1  lg:grid-cols-2 xl:grid-cols-3 mt-2 gap-5">
 
-  @for (product of productsResource.value()?.products; track $index) {
-  <product-card [product]="product"></product-card>
-  }
-  @empty {
-  @if(productsResource.isLoading()){
-  <div class="flex justify-center items-center h-screen w-screen">
-    <span class="loading loading-spinner loading-lg"></span>
+    @for (product of productsResource.value()?.products; track $index) {
+    <product-card [product]="product"></product-card>
+    }
+    @empty {
+    @if(productsResource.isLoading()){
+    <div class="flex justify-center items-center h-screen w-screen">
+      <span class="loading loading-spinner loading-lg"></span>
+    </div>
+    }
+    @else {
+    <p>No hay productos</p>
+    }
+
+    }
+
+
+
   </div>
-  }
-  @else {
-  <p>No hay productos</p>
-  }
-
-  }
-
-
-
-</div>
   <app-pagination [pages]="productsResource.value()?.pages ?? 0"
     [currentPage]="paginationService.currentPage()"></app-pagination>
+</div>

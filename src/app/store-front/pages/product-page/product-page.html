@@ -7,9 +7,9 @@
 }
 
 @if (productResponse.hasValue()) {
-<div class="grid grid-col-1 sm:grid-cols-2 gap-3 items-center h-[calc(100vh-72px)]">
+<div class="grid grid-col-1 lg:grid-cols-2 gap-3 items-center h-[calc(100vh-72px)]">
   <product-carrusel [images]="productResponse.value().images"></product-carrusel>
-  <div class="ml-10">
+  <div class="ml-10 mr-12.5">
     <h2 class="text-2xl font-bold font-[monserrat]">{{productResponse.value().title}}</h2>
     <div class="divider"></div>
     <p>

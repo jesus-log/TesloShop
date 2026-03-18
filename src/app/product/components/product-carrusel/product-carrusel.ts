@@ -11,10 +11,15 @@ import { ProductImagePipe } from "../../pipes/product-image";
   imports: [ProductImagePipe],
   templateUrl: './product-carrusel.html',
   styles: `
-    .swiper{
-      width: 100%;
-      height: 500px;
+/*     .swiper{
+      width: 300px;
+      height: auto;
     }
+    .swiper img {
+      width: 300px;
+      height: auto;
+      object-fit: cover;
+    } */
   `
 })
 export class ProductCarrusel implements AfterViewInit, OnChanges  {
